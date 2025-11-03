@@ -5,27 +5,26 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 function PokeResult() {
-  const params = useParams() as { pokename?: string };
+  const params = useParams() as { pokeName?: string };
   const [pokeData, setPokeData] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchPokeData = async () => {
-    if (!params.pokename) return;
+    if (!params.pokeName) return;
     try {
         setLoading(true);
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(params.pokename)}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(params.pokeName)}`);
         const data = await response.json();
         setPokeData(data);
         setLoading(false);
     }catch (error) {
-        setLoading(false);
         console.error("Error fetching Pokemon data:", error);
     }
 }
 
     useEffect(() => {
         fetchPokeData();
-    }, [params.pokename]);
+    }, [params.pokeName]);
     console.log(params);
 
   return (
@@ -38,10 +37,11 @@ function PokeResult() {
                     <p>Loading...</p>
                 ) : (
                     <>
-                        <Image src={pokeData?.sprites?.other?.home?.front_default || ''} alt={pokeData?.name || params.pokename || 'pokemon'} width={300} height={300} />
-                        <h1 className="text-3xl font-bold">{pokeData?.name ?? params.pokename}</h1>
-                        <Image src={pokeData?.sprites?.other?.home?.front_default || ''} alt={pokeData?.name || params.pokename || 'pokemon'} width={300} height={300} />
-                        <div className='mt-5 text-left'>     
+                        <h1 className="text-3xl font-bold">{pokeData?.name ?? params.pokeName}</h1>
+                        <Image src={pokeData?.sprites?.other?.home?.front_default || ''} alt={pokeData?.name || params.pokeName || 'pokemon'} width={300} height={300} />
+                        <div className='mt-5 text-left'>  
+                            <p className='my-3'>Height: {pokeData?.height}</p>
+                            <p className='my-3'>Weight: {pokeData?.weight}</p>   
                             <p className='my-3'>
                                 Abilities: {" "}
                                 {pokeData?.abilities?.map((abilityObj: any, index: number) => (
