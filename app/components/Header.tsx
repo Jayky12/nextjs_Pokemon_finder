@@ -8,11 +8,11 @@ function Header() {
 
     const [pokeName, setPokeName] = useState<string>("");
 
-    const handleInput = (e) => {
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPokeName(e.target.value);
     }
 
-    const handleForm = (e) => {
+    const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(pokeName);
         router.push(`/pokesearch/${pokeName.toLowerCase()}`);

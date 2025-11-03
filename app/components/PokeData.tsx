@@ -3,9 +3,13 @@ import React,{useState, useEffect} from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 
+type PokemonItem = {
+    name: string;
+    url: string;
+};
 
 function PokeData() {
-    const [pokemon, setPokemon] = useState([]);
+    const [pokemon, setPokemon] = useState<PokemonItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     console.log("Data from PokeData component", pokemon);
@@ -33,8 +37,8 @@ function PokeData() {
         ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
                 {pokemon.map((val , index)=> (
-                  <Link key={val.name} href={`/pokeinfo/[id]`} as={`/pokeinfo/${index + 1}`}>
-                    <div key={index} className="flex flex-col items-center bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                  <Link key={val.name} href={`/pokeinfo/${index + 1}`}>
+                    <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                         <div>
                             <h3 className="font-bold text-lg text-center">{val.name}</h3>
                             <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png`} width={150} height={150} alt={val.name} />
